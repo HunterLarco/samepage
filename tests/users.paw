@@ -5,7 +5,7 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>CB9761D1-C8D7-477D-81AD-0E0720DCF1EF</UUID>
-        <nextObjectID>115</nextObjectID>
+        <nextObjectID>119</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
@@ -110,16 +110,16 @@
     </object>
     <object type="LMREQUEST" id="z109">
         <attribute name="uuid" type="string">596577F6-9F68-4A9A-B1FD-106D42673953</attribute>
-        <attribute name="url" type="string">[{"data":{"environmentVariable":"EA123878-FA3C-4373-AEA3-59BAAF4E5F47"},"identifier":"com.luckymarmot.EnvironmentVariableDynamicValue"},"\\/users\\/"]</attribute>
+        <attribute name="url" type="string">[{"data":{"environmentVariable":"EA123878-FA3C-4373-AEA3-59BAAF4E5F47"},"identifier":"com.luckymarmot.EnvironmentVariableDynamicValue"},"\\/users\\/students\\/"]</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"email\\":\\"jane10@doe.com\\",\\"password\\":\\"secretpassword\\",\\"type\\":\\"FACULTY\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"email\\":\\"jane12@doe.com\\",\\"password\\":\\"secretpassword\\",\\"name\\":\\"Jane Doe\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
-        <attribute name="name" type="string">Post User</attribute>
+        <attribute name="name" type="string">Create Student</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z112"></relationship>
@@ -171,9 +171,61 @@
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
         <attribute name="order" type="int64">1</attribute>
-        <attribute name="name" type="string">Get User</attribute>
+        <attribute name="name" type="string">Validate Student Auth</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z104 z113"></relationship>
+    </object>
+    <object type="LMREQUEST" id="z116">
+        <attribute name="uuid" type="string">5CA68841-C1B2-49E4-8AC9-D04E6FA54ADB</attribute>
+        <attribute name="url" type="string">[{"data":{"environmentVariable":"EA123878-FA3C-4373-AEA3-59BAAF4E5F47"},"identifier":"com.luckymarmot.EnvironmentVariableDynamicValue"},"\\/users\\/parents\\/"]</attribute>
+        <attribute name="storecookies" type="bool">1</attribute>
+        <attribute name="sendcookies" type="bool">1</attribute>
+        <attribute name="redirectmethod" type="bool">0</attribute>
+        <attribute name="redirectauthorization" type="bool">0</attribute>
+        <attribute name="method" type="string">POST</attribute>
+        <attribute name="followredirects" type="bool">0</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"email\\":\\"parent@doe.com\\",\\"password\\":\\"secretpassword\\",\\"name\\":\\"Larry Doe\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="order" type="int64">2</attribute>
+        <attribute name="name" type="string">Create Parent</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z117"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z117">
+        <attribute name="value" type="string"></attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string"></attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z116"></relationship>
+    </object>
+    <object type="LMREQUEST" id="z118">
+        <attribute name="uuid" type="string">9BC8F6EE-F907-489C-BF2C-33B3C1D18CA8</attribute>
+        <attribute name="url" type="string">[{"data":{"environmentVariable":"EA123878-FA3C-4373-AEA3-59BAAF4E5F47"},"identifier":"com.luckymarmot.EnvironmentVariableDynamicValue"},"\\/signup\\/faculty"]</attribute>
+        <attribute name="storecookies" type="bool">1</attribute>
+        <attribute name="sendcookies" type="bool">1</attribute>
+        <attribute name="redirectmethod" type="bool">0</attribute>
+        <attribute name="redirectauthorization" type="bool">0</attribute>
+        <attribute name="method" type="string">POST</attribute>
+        <attribute name="followredirects" type="bool">0</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"email\\":\\"teacher4@school.edu\\",\\"password\\":\\"iloveteaching\\",\\"name\\":\\"Johnny Appleseed\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="order" type="int64">3</attribute>
+        <attribute name="name" type="string">Create Faculty</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z119"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z119">
+        <attribute name="value" type="string"></attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string"></attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z118"></relationship>
     </object>
 </database>

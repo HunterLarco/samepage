@@ -66,6 +66,11 @@ class Model(object):
     collection.drop()
     return deleted
   
+  def get(cls, *args, keys_only=False):
+    query = fetch(*args, count=1, keys_only=keys_only)
+    if len(query) == 0: return None
+    return query[0]
+  
   # count = 0 means no limit
   @classmethod
   def fetch(cls, *args, count=0, keys_only=False):

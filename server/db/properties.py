@@ -36,10 +36,11 @@ class Property(object):
   '   how to unpack the same data.
   """
   
-  def __init__(self, multiple=False, values=None, required=False):
+  def __init__(self, multiple=False, values=None, required=False, default=None):
     self.multiple = multiple
     self.values = values
     self.required = required
+    self.default = default
   
   def _pack(self, value):
     """
@@ -56,9 +57,11 @@ class Property(object):
     '   <list object value> if self.multiple
     '   <object value> if not self.multiple
     """
+    if value == None: value = self.default
     if self.required and value == None:
       raise ValueError('Value required')
     if self.multiple:
+      if value == None: return self.pack(value)
       if not isinstance(value, list): raise ValueError('Property with keyword multiple must contain a list of values')
       return [self._pack(obj) for obj in value]
     else:
@@ -83,8 +86,9 @@ class Property(object):
     '   <object value> if not self.multiple
     """
     if self.multiple:
+      if value == None: return self.unpack(value)
       if not isinstance(value, list): raise ValueError('Property with keyword multiple must contain a list of values')
-      return [self.unpack(obj) for obj in value]
+      return [self._unpack(obj) for obj in value]
     else: return self.unpack(value)
   
   def unpack(self, value):
@@ -248,6 +252,7 @@ class ModelProperty(KeyProperty):
     self._model = model
   
   def unpack(self, value):
+    if value == None: return None
     return super(ModelProperty, self).unpack(value).get()
   
   def pack(self, value):
@@ -255,4 +260,3 @@ class ModelProperty(KeyProperty):
     if not isinstance(value, self._model):
       raise ValueError('ModelProperty must contain %s instance' % self._model.__name__)
     return super(ModelProperty, self).pack(value.key)
-

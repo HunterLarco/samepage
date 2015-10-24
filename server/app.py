@@ -1,6 +1,6 @@
 """ FLASK IMPORTS """
 from flask import Flask, request, make_response, jsonify, abort
-from flask_restful import Resource, Api
+from functools import wraps
 
 
 """ MONGO IMPORTS """
@@ -15,7 +15,6 @@ import response
 
 """ FLASK SETUP """
 app = Flask(__name__)
-api = Api(app)
 
 
 """ DECORATORS """
@@ -28,19 +27,20 @@ def auth(f):
   '   1. Adds an additional kwarg ( current_user ) which contains the
   '      entity of the current user based on the Basic Auth.
   """
+  @wraps(f)
   def handle(*args, **kwargs):
     basic = request.authorization
-    if not basic: return response.throw('100')
+    if not basic: return response.throw('100', compiled=True)
     
     email = basic.username
     password = basic.password
     
     users = AuthModel.fetch(AuthModel.email == email)
     print(email, users)
-    if len(users) == 0: return response.throw('100')
+    if len(users) == 0: return response.throw('100', compiled=True)
     
     user = users[0]
-    if not user.check_password(password): return response.throw('100')
+    if not user.check_password(password): return response.throw('100', compiled=True)
     
     kwargs['current_user'] = user
     
@@ -66,74 +66,81 @@ def parameters(*params):
   '      present in the request body.
   """
   def decorator(f):
+    @wraps(f)
     def scraper(*args, **kwargs):
       body = request.json
       for param in params:
-        if not param in body: return response.throw('000', param)
+        if not param in body: return response.throw('000', param, compiled=True)
         kwargs[param] = body[param]
       return f(*args, **kwargs)
     return scraper
   return decorator
 
 
+#
+#
+#
+# class Users(Resource):
+#
+#   @auth
+#   def get(self, current_user):
+#     return response.reply()
+#
+#
+#
+#
+# class StudentUsers(Resource):
+#
+#   @parameters('email', 'password', 'name')
+#   def post(self, email=None, password=None, name=None):
+#     usertuple = StudentModel.create(email, password, name=name)
+#     if not usertuple:
+#       return response.throw('101')
+#
+#     user, auth = usertuple
+#     return response.reply({
+#       'id': user.key.urlsafe()
+#     })
+#
+#
+#
+# class ParentUsers(Resource):
+#
+#   @parameters('email', 'password', 'name')
+#   def post(self, email=None, password=None, name=None):
+#     usertuple = ParentModel.create(email, password, name=name)
+#     if not usertuple:
+#       return response.throw('101')
+#
+#     user, auth = usertuple
+#     return response.reply({
+#       'id': user.key.urlsafe()
+#     })
 
 
 
-
-class Users(Resource):
+@app.route('/signup/faculty', methods=['POST'])
+@parameters('email', 'password', 'name')
+def signup_faculty(email=None, password=None, name=None):
+  usertuple = FacultyModel.create(email, password, name=name)
+  if not usertuple:
+    return response.throw('101', compiled=True)
   
-  @auth
-  def get(self, current_user=None):
-    return response.reply()
+  user, auth = usertuple
   
-  @parameters('email', 'password', 'role')
-  def post(self, email=None, password=None, role=None):
-    if AuthModel.has_email(email):
-      return response.throw('101')
-    
-    user = StudentModel(grade=5)
-    user.save()
-    
-    auth = AuthModel(email=email, user=user)
-    auth.set_password(password)
-    auth.save()
-    
-    user.auth = auth
-    user.save()
-    
-    return response.reply({
-      'id': user.key.id
-    })
+  return response.reply({
+    'id': user.key.urlsafe()
+  }, compiled=True)
 
 
 
 # must use super user to create other super user / view them
 
-class UserTypes(Resource):
-  def get(self):
-    return response.reply(USER_TYPES)
+@app.route('/constants/errors', methods=['GET'])
+def get_error_responses():
+  return response.reply(response._ERROR_RESPONSES, compiled=True)
 
 
-class ErrorTypes(Resource):
-  def get(self):
-    return response.reply(response._ERROR_RESPONSES)
-
-
-
-
-
-""" RESTFUL API RESOURCE ROUTING """
-api.add_resource(Users, '/users/')
-api.add_resource(UserTypes, '/types/roles')
-api.add_resource(ErrorTypes, '/types/errors')
-
-
-""" CUSTOM JSON SERIALIZER FOR flask_restful """
-@api.representation('application/json')
-def output_json(data, code, headers=None):
-    resp = make_response(JSONEncoder().encode(data), code)
-    resp.headers.extend(headers or {})
-    return resp
 
 
 """ START SERVER """
