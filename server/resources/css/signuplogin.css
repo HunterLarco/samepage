@@ -1,0 +1,84 @@
+.signuplogin{
+  display:block;
+  
+  width:400px;
+  margin:50px auto;
+  padding:70px;
+  
+  background:#4cb1e4;
+  
+  border-radius:5px;
+}
+.signuplogin h1{
+  text-align:center;
+  
+  padding:0px;
+  margin:0px;
+  
+  font-size:24px;
+  font-weight:600;
+  
+  color:rgb(255,255,255);
+}
+.signuplogin p{
+  text-align:center;
+  
+  padding:0px;
+  margin:6px 0px 65px 0px;
+  
+  font-size:18px;
+  font-weight:500;
+  
+  color:rgba(255,255,255,0.8);
+}
+.signuplogin input{
+  display:block;
+  
+  font-size:16px;
+  line-height:auto;
+  padding:10px 12px;
+  margin:8px 0px;
+  
+  width:100%;
+  box-sizing: border-box;
+  
+  border-radius:3px;
+  border:none;
+  outline:none;
+  
+  cursor:text;
+}
+.signuplogin .button{
+  display:block;
+  background:rgb(35,125,171);
+  
+  font-size:18px;
+  font-weight:600;
+  color:rgb(255,255,255);
+  text-align:center;
+  
+  padding:10px 12px;
+  margin:8px 0px;
+  
+  border-radius:3px;
+  
+  cursor:pointer;
+}
+.signuplogin .button:hover{
+  background:rgb(25,115,161);
+}
+.signuplogin .line{
+  height:1px;
+  margin:40px 30px;
+  background:rgba(255,255,255,0.4);
+}
+.signuplogin a{
+  display:block;
+  margin-top:25px;
+  
+  text-align:center;
+  font-size:15px;
+  font-weight:400;
+  
+  color:rgb(32,90,101);
+}

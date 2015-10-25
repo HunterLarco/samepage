@@ -1,0 +1,16 @@
+.header{
+  background:rgba(255,255,255,0.95);
+  border-bottom:1px solid rgba(0,0,0,0.05);
+  
+  padding:20px 50px;
+}
+.header .title{
+  display:inline-block;
+  vertical-align:middle;
+  
+  color:rgb(150,150,150);
+  font-size: 15px;
+  font-weight:500;
+  
+  text-transform:uppercase;
+}

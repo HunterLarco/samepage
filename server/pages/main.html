@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <style>
 
+
+.webpage{
+  position:fixed;
+  
+  top:0px;
+  left:0px;
+  
+  width:100%;
+  height:100%;
+  
+  overflow:scroll;
+  
+  display:none;
+}
+
+
 </style>
 <html>
 <head>
@@ -18,8 +34,55 @@
 <link rel="stylesheet" href="/resources/css/resets.css"/>
 <link rel="stylesheet" href="/resources/css/global.css"/>
 
+<link rel="stylesheet" href="/resources/css/signuplogin.css"/>
+<link rel="stylesheet" href="/resources/css/header.css"/>
+
+<script src='/resources/js/browser/cookies.js'></script>
+
+<script src='/resources/js/network/request.js'></script>
+<script src='/resources/js/network/api.js'></script>
+<script src='/resources/js/network/auth.js'></script>
+
+<script src='/resources/js/models/client.js'></script>
+
 </head>
 <body>
+
+
+<div class='webpage' page='signup'>
+  <div class='header'>
+    <div class='title'>samepage Signup</div>
+  </div>
+  
+  <div class='signuplogin'>
+    <h1>Looking for a better way to communicate? Sign up!</h1>
+    <p><i>samepage</i> is a streamlined task management and communication resource for teachers, parents, and students.</p>
+    <input type='email' placeholder='Email'/>
+    <input type='name' placeholder='Name'/>
+    <input type='password' placeholder='Password'/>
+    <div class='button'>Sign Up</div>
+    <div class='line'></div>
+    <nav onclick='navigate("login")'><div class='button'>Log In</div></nav>
+  </div>
+</div>
+
+<div class='webpage' page='login'>
+  <div class='header'>
+    <div class='title'>samepage Login</div>
+  </div>
+  
+  <div class='signuplogin'>
+    <h1>Welcome back! We're glad to have you.</h1>
+    <p><i>samepage</i> is a streamlined task management and communication resource for teachers, parents, and students.</p>
+    <input type='email' placeholder='Email'/>
+    <input type='password' placeholder='Password'/>
+    <div class='button'>Log In</div>
+    <div class='line'></div>
+    <nav onclick='navigate("signup")'><div class='button'>Sign Up</div></nav>
+  </div>
+</div>
+
+<div class='webpage' page='listview'>Listview</div>
 
 
 <script type='text/javascript'>
@@ -28,7 +91,27 @@
 	window.onload = Init;
 	
   function Init(){
-    
+    Client.get(function ClientExists(event){
+      ShowPage('listview');
+    }, function NoClient(event){
+      ShowPage('signup');
+    });
+  }
+  
+  function ShowPage(page){
+    var page = document.querySelector('*[page='+page+']');
+    page.setAttribute('shown', 'true');
+    page.style.display = 'block';
+  }
+  function HidePage(){
+    var page = document.querySelector('*[shown=true]');
+    page.removeAttribute('shown');
+    page.style.display = 'none';
+  }
+  
+  window.navigate = function Navigate(page){
+    HidePage();
+    ShowPage(page);
   }
   
 })();
